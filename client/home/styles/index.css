@@ -1,0 +1,15 @@
+/*
+* @Author: JohnTrump
+* @Date:   2017-09-22 16:03:24
+* @Last Modified by:   JohnTrump
+* @Last Modified time: 2017-09-26 13:44:34
+*/
+
+html {
+  color: pink;
+}
+
+.first-note {
+  font-size: 25px;
+  box-sizing: content-box;
+}

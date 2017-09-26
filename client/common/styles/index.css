@@ -1,0 +1,15 @@
+/*
+* @Author: JohnTrump
+* @Date:   2017-09-22 16:03:24
+* @Last Modified by:   JohnTrump
+* @Last Modified time: 2017-09-26 10:00:25
+*/
+
+body {
+  background-color: blue;
+}
+
+.first-note {
+  font-size: 20px;
+  border-color: red;
+}

@@ -1,0 +1,38 @@
+{
+  "name": "play-webpack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_ENV=dev supervisor -w server,app.js -e node,js app",
+    "test-pro": "NODE_ENV=production webpack --config ./tools/webpack.config.js",
+    "test-dev": "NODE_ENV=dev webpack --config ./tools/webpack.dev.config.js --profile --progress --colors --display-error-details",
+    "build": "webpack --config ./tools/webpack.config.js"
+  },
+  "keywords": [],
+  "author": "John <wujunchuan1994@hotmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "~2.18.13",
+    "clean-webpack-plugin": "~0.1.16",
+    "css-loader": "~0.28.7",
+    "extract-text-webpack-plugin": "~3.0.0",
+    "file-loader": "~0.11.2",
+    "html-webpack-plugin": "~2.30.1",
+    "node-sass": "~4.5.3",
+    "postcss-loader": "~2.0.6",
+    "pre-commit": "~1.2.2",
+    "reload": "~2.2.2",
+    "sass-loader": "~6.0.6",
+    "style-loader": "~0.18.2",
+    "url-loader": "~0.5.9",
+    "webpack": "~3.6.0",
+    "webpack-dev-middleware": "~1.12.0",
+    "webpack-hot-middleware": "~2.19.1"
+  },
+  "dependencies": {
+    "consolidate": "~0.14.5",
+    "ejs": "~2.5.7",
+    "express": "~4.15.5"
+  }
+}
