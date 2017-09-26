@@ -3,9 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>example - sub-home</title>
-    <% if (env === "production") { %>
-        <link rel="stylesheet" href="/page2/index.css">
-    <% } %>
 </head>
 <body>
     <div class="total-container">
@@ -13,9 +10,9 @@
         <br>
         <div class="image-example-common"></div>
     </div>
-    <script src="/page2/bundle.js"></script>
     <% if (env !== "production" && reload === true) { %>
         <script src="/reload/reload.js"></script>
+        <script src="/page2/bundle.js"></script>
     <% } %>
 </body>
 </html>

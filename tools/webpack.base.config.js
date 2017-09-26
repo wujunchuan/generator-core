@@ -2,7 +2,7 @@
 * @Author: wujunchuan
 * @Date:   2017-09-22 09:43:35
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-09-25 18:23:15
+* @Last Modified time: 2017-09-26 17:03:20
 */
 
 // 基本的webpack配置

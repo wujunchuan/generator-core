@@ -2,7 +2,7 @@
 * @Author: wujunchuan
 * @Date:   2017-09-22 10:27:35
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-09-25 17:04:12
+* @Last Modified time: 2017-09-26 19:41:19
 */
 
 // 生产环境的 webpack 配置,继承自base
@@ -15,6 +15,12 @@ const autoprefixer  = require("autoprefixer");
 const config = require('./webpack.base.config.js');
 // 抽离CSS文件的插件
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+// 生成.html
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+// 在生成的.html上插入内容
+const HtmlWebpackBannerPlugin = require('html-webpack-banner-plugin');
+const glob = require('glob');
+const path = require('path');
 
 /* 添加Loader */
 config.module.rules.push(
@@ -50,6 +56,9 @@ config.module.rules.push(
 
 /* 添加插件 */
 config.plugins.push(
+  new webpack.BannerPlugin({
+    banner: ` build: ${new Date().toLocaleString()} `
+  }),
   /* 启动minify */
   // loaders 的压缩模式将在 webpack 3 或后续版本中取消。
   new webpack.LoaderOptionsPlugin({
@@ -63,5 +72,44 @@ config.plugins.push(
     ignoreOrder: true
   })
 );
+
+var pages = Object.keys(getEntry('server/views-dev/**/*.html', 'server/views-dev/'));
+console.log('pages:',pages);
+pages.forEach(function(pathname) {
+  var conf = {
+    filename: '../server/views-pro/' + pathname + '.html', //生成的html存放路径，相对于path
+    template: '!!raw-loader!./server/views-dev/' + pathname + '.html', //html模板路径
+    inject: 'body',  //js插入的位置，true/'head'/'body'/false
+    minify: { //压缩HTML文件
+     removeComments: true, //移除HTML中的注释
+     collapseWhitespace: true //删除空白符与换行符
+    }
+  };
+  if (pathname in config.entry) {
+    // conf.favicon = 'src/imgs/favicon.ico';
+    conf.inject = 'body';
+    conf.chunks = ['jquery', pathname];
+  }
+  config.plugins.push(new HtmlWebpackPlugin(conf));
+});
+// 往生成的.html文件中插入时间戳
+config.plugins.push(new HtmlWebpackBannerPlugin({ banner: `build: ${new Date().toLocaleString()}`, }));
+
+function getEntry(globPath, pathDir) {
+  var files = glob.sync(globPath);
+  var entries = {},
+    entry, dirname, basename, pathname, extname;
+
+  for (var i = 0; i < files.length; i++) {
+    entry = files[i];
+    dirname = path.dirname(entry);
+    extname = path.extname(entry);
+    basename = path.basename(entry, extname);
+    pathname = path.join(dirname, basename);
+    pathname = pathDir ? pathname.replace(new RegExp('^' + pathDir), '') : pathname;
+    entries[pathname] = ['./' + entry];
+  }
+  return entries;
+}
 
 module.exports = config;

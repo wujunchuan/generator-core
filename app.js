@@ -2,7 +2,7 @@
  * @Author: JohnTrump
  * @Date:   2017-09-25 16:17:18
  * @Last Modified by:   JohnTrump
- * @Last Modified time: 2017-09-26 12:00:36
+ * @Last Modified time: 2017-09-26 17:29:17
  */
 
 var express = require('express');
@@ -12,10 +12,11 @@ var consolidate = require('consolidate');
 var isDev = process.env.NODE_ENV !== 'production';
 var app = express();
 var port = 3000;
+var viewsPath = (isDev ? './server/views-dev/' : './server/views-pro');
 
 app.engine('html', consolidate.ejs);
 app.set('view engine', 'html');
-app.set('views', path.resolve(__dirname, './server/views-dev'));
+app.set('views', path.resolve(__dirname, viewsPath));
 
 // local variables for all views
 app.locals.env = process.env.NODE_ENV || 'dev';
@@ -23,7 +24,7 @@ app.locals.reload = true;
 
 /**
  * 开发模式
- *   Browser-Sync
+ *   Browser-Sync [候选]
  *   Hot Module Replace (HMR)
  *   Supervisor
  */
@@ -58,20 +59,20 @@ if (isDev) {
   });
   // 如果只是修改view的文件,就不需要重启服务器,这里我们引用了browser-sync
   // 注意,Browser-Sync只专注于监听views-dev/的修改,想要css与js修改的模块热更新,请使用3000端口
-  var bs = require('browser-sync').create();
-  bs.init({
-    open: false,
-    ui: false,
-    notify: true,
-    proxy: 'http://localhost:3000',
-    files: ['./server/views-dev/**'],
-    port: 8080
-  })
-  console.log('App (dev) is going to be running on port 8080 (by browsersync).');
+  // var bs = require('browser-sync').create();
+  // bs.init({
+  //   open: false,
+  //   ui: false,
+  //   notify: true,
+  //   proxy: 'http://localhost:3000',
+  //   files: ['./server/views-dev/**'],
+  //   port: 8080
+  // });
+  // console.log('App (dev) is going to be running on port 8080 (by browsersync).');
 
 } else {
   // static assets served by express.static() for production
-  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express.static(path.join(__dirname, 'dist')));
   require('./server/routes')(app);
   app.listen(port, function() {
     console.log('App (production) is now running on port 3000!');
