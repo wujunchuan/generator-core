@@ -2,7 +2,7 @@
 * @Author: wujunchuan
 * @Date:   2017-09-22 09:43:35
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-09-27 16:44:55
+* @Last Modified time: 2017-09-27 17:49:25
 */
 
 // 基本的webpack配置
@@ -31,7 +31,7 @@ const webpackConfig = {
   // value: {String} [filepath]
   entry: {
 
-    'jquery': ['./common/javascripts/jquery.js', './common/javascripts/utils'],
+    'commons': ['./common/javascripts/jquery.js', './common/javascripts/utils'],
 
     'home/index': ['./home/javascripts/index.js'],
     'home/haha': ['./home/javascripts/haha.js'],
@@ -108,10 +108,10 @@ const webpackConfig = {
     ),
     // 抽离公共模块
     new webpack.optimize.CommonsChunkPlugin({
-      name: ['jquery'],
+      name: ['commons'],
       // 生成后的文件名，虽说用了[name]，但实际上就是'commons.bundle.js'了
       filename: process.env.NODE_ENV === 'dev' ? '[name].js' : '[name].[chunkhash].js',
-      minChunks: Infinity
+      minChunks: 4
     }),
   ],
 };

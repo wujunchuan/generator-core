@@ -14,10 +14,10 @@
         <!-- 开发模式下 -->
         <img src="/home/images/logo.png"/>
         <!-- 发布模式下 -->
-        <img src="~@/home/images/share-icon.png"/>
+        <img src="/home/images/share-icon.png"/>
     </div>
     <% if (env !== "production" && reload === true) { %>
-        <script src="/jquery.js"></script>
+        <script src="/commons.js"></script>
         <script src="/reload/reload.js"></script>
         <script src="/home/index.js"></script>
     <% } %>

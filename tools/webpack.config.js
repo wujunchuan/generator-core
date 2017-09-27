@@ -2,7 +2,7 @@
 * @Author: wujunchuan
 * @Date:   2017-09-22 10:27:35
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-09-27 16:09:20
+* @Last Modified time: 2017-09-27 17:48:28
 */
 
 // 生产环境的 webpack 配置,继承自base
@@ -106,7 +106,7 @@ pages.forEach(function(pathname) {
   if (pathname in config.entry) {
     // conf.favicon = 'src/imgs/favicon.ico';
     conf.inject = 'body';
-    conf.chunks = ['jquery', pathname];
+    conf.chunks = ['commons', pathname];
   }
   config.plugins.push(new HtmlWebpackPlugin(conf));
 });
