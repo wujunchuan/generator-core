@@ -2,7 +2,7 @@
 * @Author: wujunchuan
 * @Date:   2017-09-22 10:27:35
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-09-26 19:41:19
+* @Last Modified time: 2017-09-27 16:09:20
 */
 
 // 生产环境的 webpack 配置,继承自base
@@ -19,11 +19,14 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 // 在生成的.html上插入内容
 const HtmlWebpackBannerPlugin = require('html-webpack-banner-plugin');
+// manifest
+var ManifestPlugin = require('webpack-manifest-plugin');
 const glob = require('glob');
 const path = require('path');
 
 /* 添加Loader */
 config.module.rules.push(
+
   // handle scss|sass
   {
     test: /\.(scss|sass)$/,
@@ -44,21 +47,37 @@ config.module.rules.push(
       ]
     })
   },
+
   // handle css
   {
     test: /\.css$/,
     exclude: /node_modules/,
     use: ExtractTextPlugin.extract({
-      use: ['css-loader']
+      fallback: 'style-loader',
+      use: [
+        'css-loader',
+        {
+          loader: 'postcss-loader',
+          options: {
+            plugins: function () {
+              return [autoprefixer("last 5 versions", "> 0%")]
+            }
+          }
+        }
+      ]
     })
   }
 );
 
 /* 添加插件 */
+
+const bannerString = ` build: ${new Date().toLocaleString()} `;
+
 config.plugins.push(
-  new webpack.BannerPlugin({
-    banner: ` build: ${new Date().toLocaleString()} `
-  }),
+  // 记录打包的信息
+  new ManifestPlugin(),
+  // 插入头部时间戳
+  new webpack.BannerPlugin({banner: bannerString}),
   /* 启动minify */
   // loaders 的压缩模式将在 webpack 3 或后续版本中取消。
   new webpack.LoaderOptionsPlugin({
@@ -74,16 +93,15 @@ config.plugins.push(
 );
 
 var pages = Object.keys(getEntry('server/views-dev/**/*.html', 'server/views-dev/'));
-console.log('pages:',pages);
 pages.forEach(function(pathname) {
   var conf = {
     filename: '../server/views-pro/' + pathname + '.html', //生成的html存放路径，相对于path
-    template: '!!raw-loader!./server/views-dev/' + pathname + '.html', //html模板路径
+    template: 'html-loader?root=../../../client!./server/views-dev/' + pathname + '.html', //html模板路径,经过raw-loader的处理,不会对此插件ejs语法进行编译
     inject: 'body',  //js插入的位置，true/'head'/'body'/false
     minify: { //压缩HTML文件
      removeComments: true, //移除HTML中的注释
      collapseWhitespace: true //删除空白符与换行符
-    }
+    },
   };
   if (pathname in config.entry) {
     // conf.favicon = 'src/imgs/favicon.ico';
@@ -93,7 +111,7 @@ pages.forEach(function(pathname) {
   config.plugins.push(new HtmlWebpackPlugin(conf));
 });
 // 往生成的.html文件中插入时间戳
-config.plugins.push(new HtmlWebpackBannerPlugin({ banner: `build: ${new Date().toLocaleString()}`, }));
+config.plugins.push(new HtmlWebpackBannerPlugin({ banner: bannerString}));
 
 function getEntry(globPath, pathDir) {
   var files = glob.sync(globPath);

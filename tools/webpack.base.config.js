@@ -2,7 +2,7 @@
 * @Author: wujunchuan
 * @Date:   2017-09-22 09:43:35
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-09-26 17:03:20
+* @Last Modified time: 2017-09-27 16:44:55
 */
 
 // 基本的webpack配置
@@ -22,7 +22,6 @@ const ASSETS_BUILD_PATH = joinBaseRoot("./dist");
 // 指向资源文件根目录
 const ASSETS_PUBLIC_PATH = config.publicPath;
 const SRC_PATH = joinBaseRoot('./client');
-
 
 const webpackConfig = {
   context: SRC_PATH,
@@ -49,6 +48,13 @@ const webpackConfig = {
     chunkFilename: "[id].js",
   },
 
+  resolve:{
+    //配置别名，在项目中可缩减引用路径
+    alias: {
+      "@": SRC_PATH
+    }
+  },
+
   module: {
     rules: [
       // handle picture
@@ -59,9 +65,9 @@ const webpackConfig = {
           {
             loader: "url-loader",
             options: {
-              // limit: 8192,
-              limit: 1,
-              name: process.env.NODE_ENV === 'dev' ? '/static/images/[name].[ext]' : '/static/images/[name]-[hash].[ext]',
+              limit: 2000,
+              name: process.env.NODE_ENV === 'dev' ? '[path][name].[ext]' : '/static/images/[name]-[hash].[ext]',
+              publicPath: ASSETS_PUBLIC_PATH
             }
           }
         ]
@@ -104,11 +110,10 @@ const webpackConfig = {
     new webpack.optimize.CommonsChunkPlugin({
       name: ['jquery'],
       // 生成后的文件名，虽说用了[name]，但实际上就是'commons.bundle.js'了
-      filename: '[name].js',
-      filename: process.env.NODE_ENV === 'dev' ? '[name].js' : '[name].[hash].js',
+      filename: process.env.NODE_ENV === 'dev' ? '[name].js' : '[name].[chunkhash].js',
       minChunks: Infinity
     }),
-  ]
+  ],
 };
 
 module.exports = webpackConfig;

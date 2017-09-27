@@ -2,7 +2,7 @@
 * @Author: wujunchuan
 * @Date:   2017-09-22 09:57:38
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-09-26 11:02:06
+* @Last Modified time: 2017-09-27 13:53:03
 */
 
 // 用于开发环境的 Webpack 配置，继承自 base
@@ -16,7 +16,7 @@ const config = require('./webpack.base.config.js');
 const autoprefixer  = require("autoprefixer");
 /* 添加Loader,不抽离 */
 config.module.rules.push(
-  // handle scss|sass
+  // handle scss|sass,不抽离样式文件
   {
     test: /\.(scss|sass)$/,
     exclude: /node_modules/,
@@ -34,7 +34,7 @@ config.module.rules.push(
     'sass-loader'
     ]
   },
-  // handle css
+  // handle css,不抽离样式文件
   {
     test: /\.css$/,
     exclude: /node_modules/,

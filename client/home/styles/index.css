@@ -2,11 +2,12 @@
 * @Author: JohnTrump
 * @Date:   2017-09-22 16:03:24
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-09-26 18:28:13
+* @Last Modified time: 2017-09-27 11:34:28
 */
 
 html {
   color: red;
+  background-image: url('../images/logo.png');
 }
 
 .first-note {

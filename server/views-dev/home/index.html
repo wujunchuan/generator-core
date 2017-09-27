@@ -5,11 +5,16 @@
     <title>example - home</title>
 </head>
 <body>
+    <a href="www.baidu.com"></a>
     <div class="total-container">
         <div class="first-note">2017年09月26日13:44:18</div>
         <div class="second-note">haha</div>
         <br>
         <div class="image-example-common"></div>
+        <!-- 开发模式下 -->
+        <img src="/home/images/logo.png"/>
+        <!-- 发布模式下 -->
+        <img src="~@/home/images/share-icon.png"/>
     </div>
     <% if (env !== "production" && reload === true) { %>
         <script src="/jquery.js"></script>
