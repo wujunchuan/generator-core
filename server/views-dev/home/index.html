@@ -17,7 +17,8 @@
         <img src="/home/images/share-icon.png"/>
     </div>
     <% if (env !== "production" && reload === true) { %>
-        <script src="/commons.js"></script>
+        <script src="/runtime.js"></script>
+        <script src="/vendor.js"></script>
         <script src="/reload/reload.js"></script>
         <script src="/home/index.js"></script>
     <% } %>

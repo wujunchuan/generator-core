@@ -2,7 +2,7 @@
 * @Author: wujunchuan
 * @Date:   2017-09-22 10:27:35
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-09-27 17:48:28
+* @Last Modified time: 2017-09-28 09:08:13
 */
 
 // 生产环境的 webpack 配置,继承自base
@@ -106,12 +106,14 @@ pages.forEach(function(pathname) {
   if (pathname in config.entry) {
     // conf.favicon = 'src/imgs/favicon.ico';
     conf.inject = 'body';
-    conf.chunks = ['commons', pathname];
+    conf.chunks = ['runtime', 'vendor', pathname];
   }
   config.plugins.push(new HtmlWebpackPlugin(conf));
 });
 // 往生成的.html文件中插入时间戳
 config.plugins.push(new HtmlWebpackBannerPlugin({ banner: bannerString}));
+// 该插件会根据模块的相对路径生成一个四位数的hash作为模块id, 建议用于生产环境。
+config.plugins.push(new webpack.HashedModuleIdsPlugin());
 
 function getEntry(globPath, pathDir) {
   var files = glob.sync(globPath);
