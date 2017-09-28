@@ -6,6 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=dev supervisor -w server,app.js -e node,js app",
     "build": "NODE_ENV=production webpack --config ./tools/webpack.config.js",
+    "eslint": "eslint ./client/**/*.js -c .eslintrc.js --cache --ignore-pattern .eslintignore",
     "test-pro": "NODE_ENV=production node app.js",
     "test-dev": "NODE_ENV=dev webpack --config ./tools/webpack.dev.config.js --profile --progress --colors --display-error-details"
   },
@@ -13,13 +14,20 @@
   "author": "John <wujunchuan1994@hotmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "babel-eslint": "~8.0.1",
     "browser-sync": "~2.18.13",
     "clean-webpack-plugin": "~0.1.16",
     "css-loader": "~0.28.7",
+    "eslint": "~4.7.2",
+    "eslint-config-airbnb": "~15.1.0",
+    "eslint-config-airbnb-base": "~12.0.1",
+    "eslint-loader": "~1.9.0",
+    "eslint-plugin-import": "~2.7.0",
     "extract-text-webpack-plugin": "~3.0.0",
     "file-loader": "~0.11.2",
     "glob": "~7.1.2",
     "html-loader": "~0.5.1",
+    "html-webpack-banner-plugin": "~1.0.0",
     "html-webpack-plugin": "~2.30.1",
     "node-sass": "~4.5.3",
     "postcss-loader": "~2.0.6",
@@ -36,7 +44,6 @@
   "dependencies": {
     "consolidate": "~0.14.5",
     "ejs": "~2.5.7",
-    "express": "~4.15.5",
-    "html-webpack-banner-plugin": "~1.0.0"
+    "express": "~4.15.5"
   }
 }

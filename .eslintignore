@@ -1,0 +1,5 @@
+dist/*.js
+tools/*.js
+node_modules/*.*
+src/test/*
+client/common/javascripts/*.*

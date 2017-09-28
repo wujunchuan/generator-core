@@ -2,7 +2,7 @@
 * @Author: wujunchuan
 * @Date:   2017-09-22 10:27:35
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-09-28 09:08:13
+* @Last Modified time: 2017-09-28 10:00:10
 */
 
 // 生产环境的 webpack 配置,继承自base
@@ -85,6 +85,7 @@ config.plugins.push(
   }),
   new webpack.optimize.UglifyJsPlugin({}),
   // 抽离CSS文件
+  // 使用的是extract-text-webpack-plugin插件，它提供了自己的一个contenhash，也是对于css文件建议的一种用法，保证了css有自己独立的hash，不会受到js文件的干扰
   new ExtractTextPlugin({
     filename: '[name].[contenthash:20].css',
     allChunks: true,
