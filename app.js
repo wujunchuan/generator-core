@@ -2,7 +2,7 @@
  * @Author: JohnTrump
  * @Date:   2017-09-25 16:17:18
  * @Last Modified by:   JohnTrump
- * @Last Modified time: 2017-09-26 17:29:17
+ * @Last Modified time: 2017-10-04 23:09:07
  */
 
 var express = require('express');
@@ -45,7 +45,7 @@ if (isDev) {
     }
   }));
   app.use(webpackHotMiddleware(compiler, {
-    timeout: 2000
+    timeout: 10000
   }));
   require('./server/routes')(app);
   // add "reload" to express, see: https://www.npmjs.com/package/reload
@@ -57,18 +57,19 @@ if (isDev) {
   server.listen(port, function() {
     console.log('App (dev) is now running on port 3000! --- ' + new Date().getTime());
   });
+
   // 如果只是修改view的文件,就不需要重启服务器,这里我们引用了browser-sync
   // 注意,Browser-Sync只专注于监听views-dev/的修改,想要css与js修改的模块热更新,请使用3000端口
-  // var bs = require('browser-sync').create();
-  // bs.init({
-  //   open: false,
-  //   ui: false,
-  //   notify: true,
-  //   proxy: 'http://localhost:3000',
-  //   files: ['./server/views-dev/**'],
-  //   port: 8080
-  // });
-  // console.log('App (dev) is going to be running on port 8080 (by browsersync).');
+  var bs = require('browser-sync').create();
+  bs.init({
+    open: false,
+    ui: false,
+    notify: true,
+    proxy: 'http://localhost:3000',
+    files: ['./server/views-dev/**'],
+    port: 8080
+  });
+  console.log('App (dev) is going to be running on port 8080 (by browsersync).');
 
 } else {
   // static assets served by express.static() for production

@@ -2,7 +2,7 @@
 * @Author: wujunchuan
 * @Date:   2017-09-22 10:27:35
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-09-28 10:00:10
+* @Last Modified time: 2017-10-04 00:00:45
 */
 
 // 生产环境的 webpack 配置,继承自base
@@ -78,11 +78,11 @@ config.plugins.push(
   new ManifestPlugin(),
   // 插入头部时间戳
   new webpack.BannerPlugin({banner: bannerString}),
-  /* 启动minify */
-  // loaders 的压缩模式将在 webpack 3 或后续版本中取消。
+  /* 启动CSS minify */
   new webpack.LoaderOptionsPlugin({
     minimize: true
   }),
+  /* 对js进行压缩 */
   new webpack.optimize.UglifyJsPlugin({}),
   // 抽离CSS文件
   // 使用的是extract-text-webpack-plugin插件，它提供了自己的一个contenhash，也是对于css文件建议的一种用法，保证了css有自己独立的hash，不会受到js文件的干扰
@@ -97,7 +97,7 @@ var pages = Object.keys(getEntry('server/views-dev/**/*.html', 'server/views-dev
 pages.forEach(function(pathname) {
   var conf = {
     filename: '../server/views-pro/' + pathname + '.html', //生成的html存放路径，相对于path
-    template: 'html-loader?root=../../../client!./server/views-dev/' + pathname + '.html', //html模板路径,经过raw-loader的处理,不会对此插件ejs语法进行编译
+    template: 'html-loader?root=../../../client!./server/views-dev/' + pathname + '.html', //html模板路径,经过html-loader的处理,不会对此插件ejs语法进行编译
     inject: 'body',  //js插入的位置，true/'head'/'body'/false
     minify: { //压缩HTML文件
      removeComments: true, //移除HTML中的注释

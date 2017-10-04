@@ -2,7 +2,7 @@
 * @Author: wujunchuan
 * @Date:   2017-09-22 09:43:35
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-09-28 09:34:03
+* @Last Modified time: 2017-10-04 23:00:09
 */
 
 // 基本的webpack配置
@@ -65,9 +65,8 @@ const webpackConfig = {
         // exclude: /node_modules/,
         use: [
           {
-            loader: "url-loader",
+            loader: "file-loader",
             options: {
-              limit: 2048,
               name: process.env.NODE_ENV === 'dev' ? '[path][name].[ext]' : '/static/images/[name]-[hash].[ext]',
               publicPath: ASSETS_PUBLIC_PATH
             }
