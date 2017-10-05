@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>example - home-haha</title>
+</head>
+<body>
+    <% include ./header.html %>
+    <div class="total-container">
+        <div class="first-note">2017年10月05日14:14:21-haha.html</div>
+        <br>
+        <div class="image-example-common"></div>
+        <!-- 开发模式下 -->
+        <img src="/home/images/logo.png"/>
+        <!-- 发布模式下 -->
+        <img src="/home/images/share-icon.png"/>
+    </div>
+    <% if (env !== "production" && reload === true) { %>
+        <script src="/runtime.js"></script>
+        <script src="/vendor.js"></script>
+        <script src="/reload/reload.js"></script>
+        <script src="/home/haha.js"></script>
+    <% } %>
+</body>
+</html>

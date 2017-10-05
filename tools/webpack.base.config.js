@@ -2,7 +2,7 @@
 * @Author: wujunchuan
 * @Date:   2017-09-22 09:43:35
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-10-04 23:00:09
+* @Last Modified time: 2017-10-05 14:18:42
 */
 
 // 基本的webpack配置
@@ -67,7 +67,7 @@ const webpackConfig = {
           {
             loader: "file-loader",
             options: {
-              name: process.env.NODE_ENV === 'dev' ? '[path][name].[ext]' : '/static/images/[name]-[hash].[ext]',
+              name: process.env.NODE_ENV === 'dev' ? '[path][name].[ext]' : 'static/images/[name]-[hash].[ext]',
               publicPath: ASSETS_PUBLIC_PATH
             }
           }
@@ -112,7 +112,6 @@ const webpackConfig = {
       name: ['vendor'],
       // 生成后的文件名，虽说用了[name]，但实际上就是'vendor.bundle.js'了
       filename: process.env.NODE_ENV === 'dev' ? '[name].js' : '[name].[chunkhash].js',
-      minChunks: 4
     }),
 
     new webpack.optimize.CommonsChunkPlugin({

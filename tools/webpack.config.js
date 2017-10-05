@@ -2,7 +2,7 @@
 * @Author: wujunchuan
 * @Date:   2017-09-22 10:27:35
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-10-04 00:00:45
+* @Last Modified time: 2017-10-05 14:23:04
 */
 
 // 生产环境的 webpack 配置,继承自base
@@ -74,6 +74,11 @@ config.module.rules.push(
 const bannerString = ` build: ${new Date().toLocaleString()} `;
 
 config.plugins.push(
+  // Scope Hoisting
+  // 当你使用这个插件的时候，模块热替换将不起作用，所以最好只在代码优化的时候才使用这个插件。
+  // 运行 Webpack 时加上 --display-optimization-bailout 参数可以得知为什么你的项目无法使用 Scope Hoisting
+  // Ref: https://zhuanlan.zhihu.com/p/27980441
+  new webpack.optimize.ModuleConcatenationPlugin(),
   // 记录打包的信息
   new ManifestPlugin(),
   // 插入头部时间戳
@@ -83,7 +88,23 @@ config.plugins.push(
     minimize: true
   }),
   /* 对js进行压缩 */
-  new webpack.optimize.UglifyJsPlugin({}),
+  new webpack.optimize.UglifyJsPlugin({
+    // 最紧凑的输出
+    beautify: false,
+    // 删除所有的注释
+    comments: false,
+    compress: {
+      // 在UglifyJs删除没有用到的代码时不输出警告
+      warnings: false,
+      // 删除所有的 `console` 语句
+      // 还可以兼容ie浏览器
+      drop_console: true,
+      // 内嵌定义了但是只用到一次的变量
+      collapse_vars: true,
+      // 提取出出现多次但是没有定义成变量去引用的静态值
+      reduce_vars: true,
+    }
+  }),
   // 抽离CSS文件
   // 使用的是extract-text-webpack-plugin插件，它提供了自己的一个contenhash，也是对于css文件建议的一种用法，保证了css有自己独立的hash，不会受到js文件的干扰
   new ExtractTextPlugin({
@@ -98,14 +119,14 @@ pages.forEach(function(pathname) {
   var conf = {
     filename: '../server/views-pro/' + pathname + '.html', //生成的html存放路径，相对于path
     template: 'html-loader?root=../../../client!./server/views-dev/' + pathname + '.html', //html模板路径,经过html-loader的处理,不会对此插件ejs语法进行编译
-    inject: 'body',  //js插入的位置，true/'head'/'body'/false
+    // 默认不插入[因为有一些文件是模板]
+    inject: false,  //js插入的位置，true/'head'/'body'/false
     minify: { //压缩HTML文件
      removeComments: true, //移除HTML中的注释
      collapseWhitespace: true //删除空白符与换行符
     },
   };
   if (pathname in config.entry) {
-    // conf.favicon = 'src/imgs/favicon.ico';
     conf.inject = 'body';
     conf.chunks = ['runtime', 'vendor', pathname];
   }
