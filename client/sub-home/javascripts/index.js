@@ -9,7 +9,7 @@ import '../styles/index.css';
 
 if (process.env.NODE_ENV == 'dev') {
   require('../../../server/views-dev/sub-home/index.html');
-  if(module.hot) {
+  if (module.hot) {
     console.clear();
     module.hot.accept();
   }

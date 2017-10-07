@@ -7,7 +7,7 @@
 
 if (process.env.NODE_ENV == 'dev') {
   require('@/../server/views-dev/home/haha.html');
-  if(module.hot) {
+  if (module.hot) {
     console.clear();
     module.hot.accept();
   }
