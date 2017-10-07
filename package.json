@@ -11,6 +11,9 @@
     "test-pro": "NODE_ENV=production node app.js",
     "test-dev": "NODE_ENV=dev webpack --config ./tools/webpack.dev.config.js --colors --profile --display-modules"
   },
+  "pre-commit": [
+    "eslint"
+  ],
   "keywords": [],
   "author": "John <wujunchuan1994@hotmail.com>",
   "license": "ISC",
