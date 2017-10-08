@@ -68,3 +68,6 @@ server/views-pro/
 
 # eslint 产生的缓存文件
 .eslintcache
+
+# styleint 产生的缓存文件
+.stylelintcache

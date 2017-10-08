@@ -7,12 +7,14 @@
     "start": "NODE_ENV=dev supervisor -w server,app.js -e node,js app",
     "build": "NODE_ENV=production webpack --colors --profile --display-modules --config ./tools/webpack.config.js",
     "analysis": "NODE_ENV=production webpack --config ./tools/webpack.config.js --profile --json > stats.json",
+    "stylelint": "stylelint ./client/**/*.?css --config stylelint.config.js --cache --ignore-pattern .stylelintignore --fix",
     "eslint": "eslint ./client/**/*.js -c .eslintrc.js --cache --ignore-pattern .eslintignore --fix",
     "test-pro": "NODE_ENV=production node app.js",
     "test-dev": "NODE_ENV=dev webpack --config ./tools/webpack.dev.config.js --colors --profile --display-modules"
   },
   "pre-commit": [
-    "eslint"
+    "eslint",
+    "stylelint"
   ],
   "keywords": [],
   "author": "John <wujunchuan1994@hotmail.com>",
@@ -33,11 +35,14 @@
     "html-webpack-banner-plugin": "~1.0.0",
     "html-webpack-plugin": "~2.30.1",
     "node-sass": "~4.5.3",
+    "postcss": "~6.0.13",
     "postcss-loader": "~2.0.6",
     "pre-commit": "~1.2.2",
     "reload": "~2.2.2",
     "sass-loader": "~6.0.6",
     "style-loader": "~0.18.2",
+    "stylelint": "~8.2.0",
+    "stylelint-config-standard": "~17.0.0",
     "url-loader": "~0.5.9",
     "webpack": "~3.6.0",
     "webpack-dev-middleware": "~1.12.0",

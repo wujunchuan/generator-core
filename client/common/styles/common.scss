@@ -6,12 +6,13 @@
  * @author wujunchuan@xiaoyouzi.com (Wujunchuan)
  * @create time: 2017-07-11
  */
-$meetyouColor: #FF74B9;
+$meetyouColor: #ff74b9;
 
-*,hr {
+*,
+hr {
   border: 0;
   margin: 0;
-  padding: 0
+  padding: 0;
 }
 
 * {
@@ -19,45 +20,64 @@ $meetyouColor: #FF74B9;
   vertical-align: baseline;
 }
 
-article,aside,details,figcaption,figure,footer,header,hgroup,hr,main,menu,nav,section {
-  display: block
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+hr,
+main,
+menu,
+nav,
+section {
+  display: block;
 }
 
 html {
   box-sizing: border-box;
-  text-size-adjust: 100%
+  text-size-adjust: 100%;
 }
 
 body {
-  font: 400 12px/1.5 Microsoft YaHei,Hiragino Sans GB,HansHandItalic,WenQuanYi Micro Hei,sans-serif;
+  font: 400 12px/1.5 Microsoft YaHei, Hiragino Sans GB, HansHandItalic, WenQuanYi Micro Hei, sans-serif;
   -webkit-touch-callout: none;
   background-color: #fff;
   color: #323232;
-  -webkit-font-smoothing: antialiased
+  -webkit-font-smoothing: antialiased;
 }
 
-blockquote,q {
-  quotes: none
+blockquote,
+q {
+  quotes: none;
 }
 
-blockquote:after,blockquote:before,q:after,q:before {
-  content: none
+blockquote:after,
+blockquote:before,
+q:after,
+q:before {
+  content: none;
 }
 
-a:active,a:hover {
-  outline: none
+a:active,
+a:hover {
+  outline: none;
 }
 
 a {
-  text-decoration: none
+  text-decoration: none;
 }
 
 table {
   border-collapse: collapse;
-  border-spacing: 0
+  border-spacing: 0;
 }
 
-li,ol,ul {
+li,
+ol,
+ul {
   list-style: none;
   display: list-item;
   text-align: -webkit-match-parent;
@@ -66,46 +86,49 @@ li,ol,ul {
 hr {
   height: 1px;
   border-top: 1px solid #ccc;
-  clear: both
+  clear: both;
 }
 
-input,select {
-  vertical-align: middle
+input,
+select {
+  vertical-align: middle;
 }
 
-input::-webkit-inner-spin-button,input::-webkit-outer-spin-button {
-  appearance: none!important;
-  margin: 0
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  appearance: none !important;
+  margin: 0;
 }
 
 ::-moz-focus-inner {
   padding: 0;
-  border: 0
+  border: 0;
 }
 
 img {
   max-width: 100%;
   height: auto;
   border: 0;
-  appearance: none
+  appearance: none;
 }
 
 button {
   overflow: visible;
-  cursor: pointer
+  cursor: pointer;
 }
 
 .hidden {
-  display: none!important
+  display: none !important;
 }
 
-.clear,.clearfix:after {
+.clear,
+.clearfix:after {
   display: block;
   content: "";
   height: 0;
-  clear: both
+  clear: both;
 }
 
 .clearfix {
-  zoom:1
+  zoom: 1;
 }
