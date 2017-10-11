@@ -2,7 +2,7 @@
 * @Author: wujunchuan
 * @Date:   2017-09-22 10:27:35
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-10-05 14:23:04
+* @Last Modified time: 2017-10-11 01:32:12
 */
 
 // 生产环境的 webpack 配置,继承自base
@@ -81,8 +81,6 @@ config.plugins.push(
   new webpack.optimize.ModuleConcatenationPlugin(),
   // 记录打包的信息
   new ManifestPlugin(),
-  // 插入头部时间戳
-  new webpack.BannerPlugin({banner: bannerString}),
   /* 启动CSS minify */
   new webpack.LoaderOptionsPlugin({
     minimize: true
@@ -111,7 +109,9 @@ config.plugins.push(
     filename: '[name].[contenthash:20].css',
     allChunks: true,
     ignoreOrder: true
-  })
+  }),
+  // 插入头部时间戳
+  new webpack.BannerPlugin({banner: bannerString})
 );
 
 var pages = Object.keys(getEntry('server/views-dev/**/*.html', 'server/views-dev/'));
