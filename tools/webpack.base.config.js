@@ -2,7 +2,7 @@
 * @Author: wujunchuan
 * @Date:   2017-09-22 09:43:35
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-10-12 14:31:09
+* @Last Modified time: 2017-10-12 17:56:15
 */
 
 // 基本的webpack配置
@@ -41,8 +41,8 @@ const webpackConfig = {
     'sub-home/index': ['./sub-home/javascripts/index.js'],
     'sub-home/haha': ['./sub-home/javascripts/haha.js'],
 
-    // 'sub-sub-home/index': ['./sub-sub-home/javascripts/index.js'],
-    // 'sub-sub-home/haha': ['./sub-sub-home/javascripts/haha.js']
+    'sub-sub-home/index': ['./sub-sub-home/javascripts/index.js'],
+    'sub-sub-home/haha': ['./sub-sub-home/javascripts/haha.js']
   },
 
   output: {

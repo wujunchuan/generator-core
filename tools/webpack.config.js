@@ -2,7 +2,7 @@
 * @Author: wujunchuan
 * @Date:   2017-09-22 10:27:35
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-10-11 01:32:12
+* @Last Modified time: 2017-10-12 18:08:25
 */
 
 // 生产环境的 webpack 配置,继承自base
@@ -134,6 +134,8 @@ pages.forEach(function(pathname) {
 });
 // 往生成的.html文件中插入时间戳
 config.plugins.push(new HtmlWebpackBannerPlugin({ banner: bannerString}));
+// 使用模块名称作为chunkid,替换掉原本的使用递增id来作为chunkid导致的[新增entry模块,其他模块的hash发送抖动]
+config.plugins.push(new webpack.NamedChunksPlugin());
 // 该插件会根据模块的相对路径生成一个四位数的hash作为模块id, 建议用于生产环境。
 config.plugins.push(new webpack.HashedModuleIdsPlugin());
 
