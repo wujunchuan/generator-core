@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>example - sub-sub-home</title>
+</head>
+<body>
+    <div class="total-container">
+        <div class="first-note">This is sub-home.</div>
+        <img src="/sub-sub-home/images/logo.png"/>
+        <!-- <img src="/home/images/logo.png"/> -->
+        <br>
+        <div class="image-example-common"></div>
+    </div>
+    <% if (env !== "production" && reload === true) { %>
+        <script src="/runtime.js"></script>
+        <script src="/vendor.js"></script>
+        <script src="/reload/reload.js"></script>
+        <script src="/sub-sub-home/index.js"></script>
+    <% } %>
+</body>
+</html>
