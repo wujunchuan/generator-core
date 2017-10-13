@@ -2,7 +2,7 @@
 * @Author: wujunchuan
 * @Date:   2017-09-22 09:43:35
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-10-12 17:56:15
+* @Last Modified time: 2017-10-13 10:26:57
 */
 
 // 基本的webpack配置
@@ -26,6 +26,7 @@ const SRC_PATH = joinBaseRoot('./client');
 const webpackConfig = {
   context: SRC_PATH,
 
+  // entry - 入口
   // NOTICE: 命名规则按以下来
   // key: {String} [moduleName]/[subModuleName]
   // value: {String} [filepath]
@@ -45,6 +46,7 @@ const webpackConfig = {
     'sub-sub-home/haha': ['./sub-sub-home/javascripts/haha.js']
   },
 
+  // output - 输出
   output: {
     // 输出
     publicPath: ASSETS_PUBLIC_PATH,
@@ -53,13 +55,15 @@ const webpackConfig = {
     chunkFilename: "[id].js",
   },
 
+  // resolve - 解析
   resolve:{
-    //配置别名，在项目中可缩减引用路径
+    //配置别名，在项目中可缩减引用路径,确保模块引入变得简单
     alias: {
       "@": SRC_PATH
     }
   },
 
+  // module - 模块
   module: {
     rules: [
       // handle picture
@@ -92,6 +96,15 @@ const webpackConfig = {
     ]
   },
 
+  // 外部扩展
+  // ref: https://doc.webpack-china.org/configuration/externals/
+  // 从输出的bundle中排除掉依赖,在运行时再从外部去获取依赖
+  // 从 CDN 引入 jQuery，而不是把它打包
+  // NOTE: 在这个项目中我们还是将其打包到vendor中
+  // externals: {
+  //   jquery: 'jQuery'
+  // }
+
   plugins: [
     // 官方文档推荐使用下面的插件来定义NODE_ENV
     new webpack.DefinePlugin({
@@ -115,6 +128,7 @@ const webpackConfig = {
       name: ['vendor'],
       // 生成后的文件名，虽说用了[name]，但实际上就是'vendor.bundle.js'了
       filename: process.env.NODE_ENV === 'dev' ? '[name].js' : '[name].[chunkhash].js',
+      minChunks: Infinity
     }),
 
     new webpack.optimize.CommonsChunkPlugin({
