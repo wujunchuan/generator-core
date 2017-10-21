@@ -2,7 +2,7 @@
 * @Author: wujunchuan
 * @Date:   2017-09-22 09:43:35
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-10-13 10:26:57
+* @Last Modified time: 2017-10-21 15:05:03
 */
 
 // 基本的webpack配置
@@ -128,9 +128,12 @@ const webpackConfig = {
       name: ['vendor'],
       // 生成后的文件名，虽说用了[name]，但实际上就是'vendor.bundle.js'了
       filename: process.env.NODE_ENV === 'dev' ? '[name].js' : '[name].[chunkhash].js',
+      // 防止将其他代码打包进来,这里需要设置minChunks: Infinity
       minChunks: Infinity
     }),
-
+    // Webpack在使用CommonsChunkPlugin会自动生成一段runtime代码(主要用来处理代码模块的映射关系)
+    // 这个映射关系会随着打包变化并且打入vendor中导致vendor文件的hash发生变化。解决方案就是将这部分的代码也淡出抽离出来成独立的文件--runtime.js
+    // 如此一来,即便是改变了业务代码,vendor的值也不会随意改变了。
     new webpack.optimize.CommonsChunkPlugin({
       name: 'runtime',
       filename: process.env.NODE_ENV === 'dev' ? '[name].js' : '[name].[chunkhash].js',
