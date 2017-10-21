@@ -2,7 +2,7 @@
 * @Author: wujunchuan
 * @Date:   2017-09-22 10:27:35
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-10-13 10:04:47
+* @Last Modified time: 2017-10-22 01:02:46
 */
 
 // 生产环境的 webpack 配置,继承自base
@@ -19,6 +19,8 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 // 在生成的.html上插入内容
 const HtmlWebpackBannerPlugin = require('html-webpack-banner-plugin');
+// 将文件内联到生成的html中
+var HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 // manifest
 var ManifestPlugin = require('webpack-manifest-plugin');
 const glob = require('glob');
@@ -110,8 +112,13 @@ config.plugins.push(
     allChunks: true,
     ignoreOrder: true
   }),
+
   // 插入头部时间戳
-  new webpack.BannerPlugin({banner: bannerString})
+  new webpack.BannerPlugin({
+    banner: bannerString,
+    // 排除掉Webpack的runtime代码
+    exclude: /runtime.*.js/
+  })
 );
 
 var pages = Object.keys(getEntry('server/views-dev/**/*.html', 'server/views-dev/'));
@@ -121,6 +128,8 @@ pages.forEach(function(pathname) {
     template: 'html-loader?root=../../../client!./server/views-dev/' + pathname + '.html', //html模板路径,经过html-loader的处理,不会对此插件ejs语法进行编译
     // 默认不插入[因为有一些文件是模板]
     inject: false,  //js插入的位置，true/'head'/'body'/false
+    // 将Webpack的runtime代码以内联的形式插入HTML代码中
+    inlineSource: 'runtime.*.js',
     minify: { //压缩HTML文件
      removeComments: true, //移除HTML中的注释
      collapseWhitespace: true //删除空白符与换行符
@@ -130,7 +139,10 @@ pages.forEach(function(pathname) {
     conf.inject = 'body';
     conf.chunks = ['runtime', 'vendor', pathname];
   }
+  // 生成HTML的插件
   config.plugins.push(new HtmlWebpackPlugin(conf));
+  // 内联代码到HTML的插件
+  config.plugins.push(new HtmlWebpackInlineSourcePlugin());
 });
 // 往生成的.html文件中插入时间戳
 config.plugins.push(new HtmlWebpackBannerPlugin({ banner: bannerString}));
