@@ -1,8 +1,16 @@
 module.exports = {
   // 基于airbnb规则
-  "extends": "airbnb-base",
+  extends: "airbnb-base",
   env: {
     browser: true
+  },
+  // 支持import()动态加载
+  // Ref discuss --> https://stackoverflow.com/questions/39158552/ignore-eslint-error-import-and-export-may-only-appear-at-the-top-level
+  parser: "babel-eslint",
+  parserOptions: {
+    "sourceType": "module",
+    // 支持import在任何地方使用[之前只限定在文件顶部,便于静态分析]
+    "allowImportExportEverywhere": true
   },
   // Custom rules
   rules: {

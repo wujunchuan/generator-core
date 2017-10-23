@@ -72,3 +72,6 @@ server/views-pro/
 
 # styleint 产生的缓存文件
 .stylelintcache
+
+# 打包后的模块分析
+stats.json

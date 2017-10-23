@@ -7,7 +7,7 @@
 <body>
     <% include ./header.html %>
     <div class="total-container">
-        <div class="first-note">2017年10月04日23:07:48</div>
+        <div class="first-note">2017年10月23日10:29:52</div>
         <div class="second-note">2017年10月04日23:09:232</div>
         <br>
         <div class="image-example-common"></div>
@@ -15,6 +15,7 @@
         <img src="/home/images/logo.png"/>
         <!-- 发布模式下 -->
         <img src="/home/images/share-icon.png"/>
+        <input type="button" value="测试异步加载" id="test" />
     </div>
     <% if (env !== "production" && reload === true) { %>
         <script src="/runtime.js"></script>

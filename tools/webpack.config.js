@@ -2,7 +2,7 @@
 * @Author: wujunchuan
 * @Date:   2017-09-22 10:27:35
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-10-22 01:02:46
+* @Last Modified time: 2017-10-23 15:36:54
 */
 
 // 生产环境的 webpack 配置,继承自base
@@ -105,6 +105,7 @@ config.plugins.push(
       reduce_vars: true,
     }
   }),
+
   // 抽离CSS文件
   // 使用的是extract-text-webpack-plugin插件，它提供了自己的一个contenhash，也是对于css文件建议的一种用法，保证了css有自己独立的hash，不会受到js文件的干扰
   new ExtractTextPlugin({
@@ -148,7 +149,6 @@ pages.forEach(function(pathname) {
 config.plugins.push(new HtmlWebpackBannerPlugin({ banner: bannerString}));
 // 使用模块名称作为chunkid,替换掉原本的使用递增id来作为chunkid导致的[新增entry模块,其他模块的hash发生抖动,导致客户端长效缓存失效]
 config.plugins.push(new webpack.NamedChunksPlugin((chunk) => {
-  //
   if (chunk.name) {
     return chunk.name;
   }

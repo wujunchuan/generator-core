@@ -2,7 +2,7 @@
 * @Author: wujunchuan
 * @Date:   2017-09-22 09:43:35
 * @Last Modified by:   JohnTrump
-* @Last Modified time: 2017-10-21 15:05:03
+* @Last Modified time: 2017-10-23 13:51:53
 */
 
 // 基本的webpack配置
@@ -52,14 +52,15 @@ const webpackConfig = {
     publicPath: ASSETS_PUBLIC_PATH,
     path: ASSETS_BUILD_PATH,
     filename: process.env.NODE_ENV === 'dev' ? '[name].js' : '[name].[chunkhash].js',
-    chunkFilename: "[id].js",
+    // 为按需加载的文件命名 -- chunkFilename
+    chunkFilename: "async/[name].[chunkhash].js",
   },
 
   // resolve - 解析
   resolve:{
     //配置别名，在项目中可缩减引用路径,确保模块引入变得简单
     alias: {
-      "@": SRC_PATH
+      "@": baseRoot
     }
   },
 
@@ -108,7 +109,7 @@ const webpackConfig = {
   plugins: [
     // 官方文档推荐使用下面的插件来定义NODE_ENV
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
     }),
     // A webpack plugin to remove/clean your build folder(s) before building
     // NOTE: 可以配置只删除模块下的dist
