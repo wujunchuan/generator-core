@@ -31,5 +31,9 @@ module.exports = {
     "import/no-unresolved": 0,
     // import 允许不带ext后缀名
     "import/extensions": 0,
+    // 允许使用匿名函数
+    "func-names": 0,
+    // 不强制回调函数使用箭头函数的形式呈现
+    "prefer-arrow-callback": 0
   },
 };
